@@ -13,7 +13,17 @@ $room_id = (int) $_GET['room_id'];
 /* ---------- HANDLE BOOKING ---------- */
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['nights'])) {
 
-  // Generate random guest ID if not logged in
+  $guest_name = trim($_POST['guest_name']);
+  $guest_contact = trim($_POST['guest_contact']);
+  $check_in = $_POST['check_in'];
+
+  if (empty($guest_name) || empty($guest_contact) || empty($check_in)) {
+    $_SESSION['error'] = "All fields are required.";
+    header("Location: room_details.php?room_id=$room_id");
+    exit;
+  }
+
+  // Customer ID
   if (isset($_SESSION['customer_id'])) {
     $customer_id = $_SESSION['customer_id'];
   } else {
@@ -23,7 +33,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['nights'])) {
   $nights = (int) $_POST['nights'];
   $price = (float) $_POST['price'];
 
-  // Check room availability again
+  // Re-check availability
   $checkRoom = $conn->prepare(
     "SELECT status FROM rooms WHERE room_id = ?"
   );
@@ -37,20 +47,22 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['nights'])) {
     exit;
   }
 
-  $check_in = date('Y-m-d');
-  $check_out = date('Y-m-d', strtotime("+$nights days"));
+  $check_out = date('Y-m-d', strtotime($check_in . " +$nights days"));
   $total_price = $price * $nights;
 
   // Insert booking
   $insertBooking = $conn->prepare(
     "INSERT INTO bookings
-        (room_id, customer_id, check_in, check_out, total_price, booking_status)
-        VALUES (?, ?, ?, ?, ?, 'Booked')"
+    (room_id, customer_id, guest_name, guest_contact, check_in, check_out, total_price, booking_status)
+    VALUES (?, ?, ?, ?, ?, ?, ?, 'Booked')"
   );
+
   $insertBooking->bind_param(
-    "isssd",
+    "isssssd",
     $room_id,
     $customer_id,
+    $guest_name,
+    $guest_contact,
     $check_in,
     $check_out,
     $total_price
@@ -121,7 +133,7 @@ $room = $result->fetch_assoc();
 
       <div class="row">
         <div class="col-md-6">
-          <img src="./Admin/<?= htmlspecialchars($room['image_url']) ?>"
+          <img src="admin/<?= htmlspecialchars($room['image_url']) ?>"
             class="img-fluid"
             style="height:250px; object-fit:cover;">
         </div>
@@ -139,7 +151,27 @@ $room = $result->fetch_assoc();
           </p>
 
           <form method="POST">
+
             <input type="hidden" name="price" value="<?= $room['price'] ?>">
+
+            <div class="form-group">
+              <label>Full Name</label>
+              <input type="text" name="guest_name" class="form-control" required>
+            </div>
+
+            <div class="form-group">
+              <label>Contact Number</label>
+              <input type="text" name="guest_contact" class="form-control" required>
+            </div>
+
+            <div class="form-group">
+              <label>Check-in Date</label>
+              <input type="date"
+                name="check_in"
+                class="form-control"
+                min="<?= date('Y-m-d') ?>"
+                required>
+            </div>
 
             <div class="form-group">
               <label>Number of nights</label>
@@ -163,7 +195,9 @@ $room = $result->fetch_assoc();
                 This room is not available.
               </small>
             <?php endif; ?>
+
           </form>
+
         </div>
       </div>
     </div>
