@@ -53,16 +53,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['nights'])) {
   // Insert booking
   $insertBooking = $conn->prepare(
     "INSERT INTO bookings
-    (room_id, customer_id, guest_name, guest_contact, check_in, check_out, total_price, booking_status)
-    VALUES (?, ?, ?, ?, ?, ?, ?, 'Booked')"
+    (room_id, customer_id, check_in, check_out, total_price, booking_status)
+    VALUES (?, ?, ?, ?, ?, 'Booked')"
   );
 
   $insertBooking->bind_param(
     "isssssd",
     $room_id,
     $customer_id,
-    $guest_name,
-    $guest_contact,
     $check_in,
     $check_out,
     $total_price
