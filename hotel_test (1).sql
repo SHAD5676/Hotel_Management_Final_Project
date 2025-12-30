@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Dec 19, 2025 at 08:07 PM
+-- Generation Time: Dec 30, 2025 at 02:02 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -20,6 +20,20 @@ SET time_zone = "+00:00";
 --
 -- Database: `hotel_test`
 --
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `bills`
+--
+
+CREATE TABLE `bills` (
+  `bill_id` int(11) NOT NULL,
+  `booking_id` int(11) NOT NULL,
+  `total_amount` decimal(10,2) NOT NULL,
+  `payment_method` varchar(50) DEFAULT NULL,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -45,7 +59,7 @@ INSERT INTO `bookings` (`booking_id`, `room_id`, `customer_id`, `check_in`, `che
 (1, 2, 3, '0000-00-00', '2025-12-17', 99.00, 'Checked In'),
 (2, 3, 44, '2025-12-04', '2025-12-26', 6000.00, 'Checked Out'),
 (3, 4, 55, '2025-12-02', '2025-12-18', 6000.00, 'Checked In'),
-(4, 4, 1, '2025-12-19', '2025-12-20', 10000.00, 'Booked');
+(4, 4, 1, '2025-12-19', '2025-12-20', 10000.00, 'Checked Out');
 
 -- --------------------------------------------------------
 
@@ -138,8 +152,9 @@ CREATE TABLE `rooms` (
 INSERT INTO `rooms` (`room_id`, `room_number`, `category_id`, `status`) VALUES
 (1, '22', 23, 'Available'),
 (2, '1', 1, 'Available'),
-(3, '2', 2, 'Occupied'),
-(4, '3', 3, 'Occupied');
+(3, '2', 2, 'Available'),
+(4, '3', 3, 'Occupied'),
+(5, '4', 4, 'Available');
 
 -- --------------------------------------------------------
 
@@ -162,7 +177,8 @@ INSERT INTO `room_categories` (`category_id`, `category_name`, `price`, `details
 (1, 'Single Room', 3000.00, 'Available'),
 (2, 'Double Room', 3000.00, 'Available'),
 (3, 'Family Room', 10000.00, 'Available'),
-(4, 'Twin Bed Room', 8000.00, 'Available');
+(4, 'Twin Bed Room', 8000.00, 'Available'),
+(5, 'Triple Room', 50000.00, 'Available');
 
 -- --------------------------------------------------------
 
@@ -181,9 +197,10 @@ CREATE TABLE `room_images` (
 --
 
 INSERT INTO `room_images` (`image_id`, `room_id`, `image_url`) VALUES
-(1, 2, 'uploads/rooms/1766152732_11.jpeg'),
+(1, 2, 'uploads/rooms/1767026211_22.jpg'),
 (2, 3, 'uploads/rooms/1766152893_14.jpg'),
-(3, 4, 'uploads/rooms/1766153388_images (8).jpeg');
+(3, 4, 'uploads/rooms/1766153388_images (8).jpeg'),
+(4, 5, 'uploads/rooms/1767026708_61.jpg');
 
 -- --------------------------------------------------------
 
@@ -252,6 +269,12 @@ INSERT INTO `users` (`user_id`, `username`, `password`, `role`) VALUES
 --
 -- Indexes for dumped tables
 --
+
+--
+-- Indexes for table `bills`
+--
+ALTER TABLE `bills`
+  ADD PRIMARY KEY (`bill_id`);
 
 --
 -- Indexes for table `bookings`
@@ -336,6 +359,12 @@ ALTER TABLE `users`
 --
 
 --
+-- AUTO_INCREMENT for table `bills`
+--
+ALTER TABLE `bills`
+  MODIFY `bill_id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
 -- AUTO_INCREMENT for table `bookings`
 --
 ALTER TABLE `bookings`
@@ -369,19 +398,19 @@ ALTER TABLE `payments`
 -- AUTO_INCREMENT for table `rooms`
 --
 ALTER TABLE `rooms`
-  MODIFY `room_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `room_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `room_categories`
 --
 ALTER TABLE `room_categories`
-  MODIFY `category_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `category_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `room_images`
 --
 ALTER TABLE `room_images`
-  MODIFY `image_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `image_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `services`
