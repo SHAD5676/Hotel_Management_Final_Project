@@ -31,8 +31,6 @@ if(isset($_SESSION['success'])){
 }
 ?>
 
-<a href="add_booking.php" class="btn btn-primary mb-2">Add Booking</a>
-
 <table class="table table-bordered">
 <thead>
 <tr>

@@ -29,6 +29,31 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['checkout'])) {
         $updateBooking->bind_param("i", $booking_id);
         $updateBooking->execute();
 
+
+        // -------- CREATE BILL --------
+
+// total_price already bookings table 
+$stmtBill = $conn->prepare(
+    "INSERT INTO bills (booking_id, total_amount, bill_status, bill_date)
+     VALUES (?, ?, 'Unpaid', CURDATE())"
+);
+
+$stmtBill->bind_param("id", $booking_id, $rowTotal);
+
+// total_price
+$priceStmt = $conn->prepare(
+    "SELECT total_price FROM bookings WHERE booking_id = ?"
+);
+$priceStmt->bind_param("i", $booking_id);
+$priceStmt->execute();
+$priceResult = $priceStmt->get_result();
+$priceRow = $priceResult->fetch_assoc();
+
+$rowTotal = $priceRow['total_price'];
+
+$stmtBill->execute();
+
+
         // Update room status
         $updateRoom = $conn->prepare(
             "UPDATE rooms SET status = 'Available' WHERE room_id = ?"
