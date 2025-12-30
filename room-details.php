@@ -16,6 +16,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['nights'])) {
   $guest_name = trim($_POST['guest_name']);
   $guest_contact = trim($_POST['guest_contact']);
   $check_in = $_POST['check_in'];
+  $nights = (int) $_POST['nights'];
+  $price = (float) $_POST['price'];
 
   if (empty($guest_name) || empty($guest_contact) || empty($check_in)) {
     $_SESSION['error'] = "All fields are required.";
@@ -24,24 +26,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['nights'])) {
   }
 
   // Customer ID
-  if (isset($_SESSION['customer_id'])) {
-    $customer_id = $_SESSION['customer_id'];
-  } else {
-    $customer_id = 'GUEST-' . rand(100000, 999999);
-  }
-
-  $nights = (int) $_POST['nights'];
-  $price = (float) $_POST['price'];
+  $customer_id = isset($_SESSION['customer_id']) ? $_SESSION['customer_id'] : 'GUEST-' . rand(100000, 999999);
 
   // Re-check availability
-  $checkRoom = $conn->prepare(
-    "SELECT status FROM rooms WHERE room_id = ?"
-  );
+  $checkRoom = $conn->prepare("SELECT status FROM rooms WHERE room_id = ?");
   $checkRoom->bind_param("i", $room_id);
   $checkRoom->execute();
   $roomStatus = $checkRoom->get_result()->fetch_assoc();
 
-  if ($roomStatus['status'] !== 'Available') {
+  if (!$roomStatus || $roomStatus['status'] !== 'Available') {
     $_SESSION['error'] = "Room is no longer available.";
     header("Location: room_details.php?room_id=$room_id");
     exit;
@@ -52,13 +45,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['nights'])) {
 
   // Insert booking
   $insertBooking = $conn->prepare(
-    "INSERT INTO bookings
-    (room_id, customer_id, check_in, check_out, total_price, booking_status)
-    VALUES (?, ?, ?, ?, ?, 'Booked')"
+    "INSERT INTO bookings (room_id, customer_id, check_in, check_out, total_price, booking_status) 
+         VALUES (?, ?, ?, ?, ?, 'Booked')"
   );
-
   $insertBooking->bind_param(
-    "isssssd",
+    "isssd",
     $room_id,
     $customer_id,
     $check_in,
@@ -68,9 +59,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['nights'])) {
   $insertBooking->execute();
 
   // Update room status
-  $updateRoom = $conn->prepare(
-    "UPDATE rooms SET status = 'Booked' WHERE room_id = ?"
-  );
+  $updateRoom = $conn->prepare("UPDATE rooms SET status = 'Booked' WHERE room_id = ?");
   $updateRoom->bind_param("i", $room_id);
   $updateRoom->execute();
 
@@ -78,7 +67,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['nights'])) {
   header("Location: room.php");
   exit;
 }
-
 
 /* ---------- FETCH ROOM INFO ---------- */
 $stmt = $conn->prepare(
@@ -117,22 +105,29 @@ $room = $result->fetch_assoc();
 <body>
   <?php include_once 'Inc/top_nav.php'; ?>
 
-  <main style="padding-top:200px; padding-bottom:100px">
-    <div class="container">
+  <main>
+    <div class="container py-5">
 
       <a href="room.php" class="btn btn-secondary mb-4">&larr; Back to Rooms</a>
 
-      <?php
-      if (isset($_SESSION['error'])) {
-        echo "<div class='alert alert-danger'>{$_SESSION['error']}</div>";
-        unset($_SESSION['error']);
-      }
-      ?>
+      <?php if (isset($_SESSION['error'])): ?>
+        <div class="alert alert-danger">
+          <?= htmlspecialchars($_SESSION['error']) ?>
+        </div>
+        <?php unset($_SESSION['error']); ?>
+      <?php endif; ?>
+
+      <?php if (isset($_SESSION['success'])): ?>
+        <div class="alert alert-success">
+          <?= htmlspecialchars($_SESSION['success']) ?>
+        </div>
+        <?php unset($_SESSION['success']); ?>
+      <?php endif; ?>
 
       <div class="row">
-        <div class="col-md-6">
-          <img src="admin/<?= htmlspecialchars($room['image_url']) ?>"
-            class="img-fluid"
+        <div class="col-md-6 mb-3">
+          <img src="admin/<?= htmlspecialchars($room['image_url'] ?? 'default.jpg') ?>"
+            class="img-fluid rounded"
             style="height:250px; object-fit:cover;">
         </div>
 
@@ -142,9 +137,8 @@ $room = $result->fetch_assoc();
           <p><strong>Price per night:</strong> $<?= number_format($room['price'], 2) ?></p>
           <p>
             <strong>Status:</strong>
-            <span class="badge 
-                <?= $room['status'] === 'Available' ? 'badge-success' : ($room['status'] === 'Occupied' ? 'badge-danger' : 'badge-warning'); ?>">
-              <?= $room['status'] ?>
+            <span class="badge <?= $room['status'] === 'Available' ? 'bg-success' : ($room['status'] === 'Occupied' ? 'bg-danger' : 'bg-warning'); ?>">
+              <?= htmlspecialchars($room['status']) ?>
             </span>
           </p>
 
@@ -152,18 +146,18 @@ $room = $result->fetch_assoc();
 
             <input type="hidden" name="price" value="<?= $room['price'] ?>">
 
-            <div class="form-group">
-              <label>Full Name</label>
+            <div class="mb-3">
+              <label class="form-label">Full Name</label>
               <input type="text" name="guest_name" class="form-control" required>
             </div>
 
-            <div class="form-group">
-              <label>Contact Number</label>
+            <div class="mb-3">
+              <label class="form-label">Contact Number</label>
               <input type="text" name="guest_contact" class="form-control" required>
             </div>
 
-            <div class="form-group">
-              <label>Check-in Date</label>
+            <div class="mb-3">
+              <label class="form-label">Check-in Date</label>
               <input type="date"
                 name="check_in"
                 class="form-control"
@@ -171,19 +165,19 @@ $room = $result->fetch_assoc();
                 required>
             </div>
 
-            <div class="form-group">
-              <label>Number of nights</label>
-              <select name="nights" class="form-control" required>
+            <div class="mb-3">
+              <label class="form-label">Number of nights</label>
+              <select name="nights" class="form-select" required>
                 <?php for ($i = 1; $i <= 30; $i++): ?>
                   <option value="<?= $i ?>">
-                    <?= $i ?> <?= $i == 1 ? 'night' : 'nights' ?>
+                    <?= $i ?> <?= $i === 1 ? 'night' : 'nights' ?>
                   </option>
                 <?php endfor; ?>
               </select>
             </div>
 
             <button type="submit"
-              class="btn btn-primary mt-3"
+              class="btn btn-primary"
               <?= $room['status'] !== 'Available' ? 'disabled' : '' ?>>
               Book Now
             </button>

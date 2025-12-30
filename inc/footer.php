@@ -1,5 +1,5 @@
- <footer class="footer-bg footer-p" style="background-color: #2C4549;">
-            <div class="footer-top  pt-120 pb-30">
+ <footer class="footer-bg footer-p " style="background-color: #2C4549;">
+            <div class="footer-top py-5 pb-30">
                 <div class="container">
                     <div class="row justify-content-between">
                         

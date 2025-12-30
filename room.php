@@ -34,6 +34,9 @@ session_start();
   <!-- header -->
   <?php include_once 'Inc/top_nav.php'; ?>
 
+
+
+
   <!-- main-area -->
   <main>
     <!-- breadcrumb-area -->
@@ -60,6 +63,16 @@ session_start();
         </div>
       </div>
     </section>
+
+    <?php if (isset($_SESSION['success'])): ?>
+      <div class="container mt-4">
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+          <?= htmlspecialchars($_SESSION['success']) ?>
+          <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+      </div>
+      <?php unset($_SESSION['success']); ?>
+    <?php endif; ?>
 
     <h1 style="text-align: center; margin-top: 50px;">Our Rooms</h1>
 
