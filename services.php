@@ -54,16 +54,22 @@
                                             </li>  
                                               
                                             
-                                            <li><a href="contact.php">Contact</a></li>                                               
+                                            <li><a href="contact.php">Contact</a></li> 
+                                            
+                                         
                                         </ul>
                                     </nav>
                                 </div>
                             </div>   
-                             <div class="col-xl-2 col-lg-2 d-none d-lg-block">
-                                 <a href="contact.php" class="top-btn mt-10 mb-10">reservation </a>
-                            </div>
+
+                            <div class="col-xl-2 col-lg-2 d-none d-lg-block">
+                              <a href="login.php" class="top-btn mt-10 mb-10 <?= ($currentPage == 'login.php') ? 'active' : '' ?>">Login</a>
+ 
+                             
+                             
                             
                                 <div class="col-12">
+
                                     <div class="mobile-menu"></div>
                                 </div>
                         </div>

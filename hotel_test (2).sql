@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Dec 30, 2025 at 02:02 PM
+-- Generation Time: Jan 02, 2026 at 07:46 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -35,6 +35,14 @@ CREATE TABLE `bills` (
   `created_at` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- Dumping data for table `bills`
+--
+
+INSERT INTO `bills` (`bill_id`, `booking_id`, `total_amount`, `payment_method`, `created_at`) VALUES
+(2, 2, 6000.00, 'Stripe', '2026-01-02 18:45:15'),
+(3, 2, 6000.00, 'Card', '2026-01-02 11:15:59');
+
 -- --------------------------------------------------------
 
 --
@@ -56,10 +64,12 @@ CREATE TABLE `bookings` (
 --
 
 INSERT INTO `bookings` (`booking_id`, `room_id`, `customer_id`, `check_in`, `check_out`, `total_price`, `booking_status`) VALUES
-(1, 2, 3, '0000-00-00', '2025-12-17', 99.00, 'Checked In'),
 (2, 3, 44, '2025-12-04', '2025-12-26', 6000.00, 'Checked Out'),
-(3, 4, 55, '2025-12-02', '2025-12-18', 6000.00, 'Checked In'),
-(4, 4, 1, '2025-12-19', '2025-12-20', 10000.00, 'Checked Out');
+(4, 4, 1, '2025-12-19', '2025-12-20', 10000.00, 'Checked Out'),
+(8, 3, 0, '2026-01-02', '2026-01-22', 60000.00, 'Checked Out'),
+(9, 4, 0, '2026-01-02', '2026-01-16', 140000.00, 'Accepted'),
+(10, 5, 0, '2026-01-02', '2026-01-12', 80000.00, 'Accepted'),
+(11, 2, 0, '2026-01-02', '2026-01-09', 21000.00, 'Accepted');
 
 -- --------------------------------------------------------
 
@@ -151,10 +161,10 @@ CREATE TABLE `rooms` (
 
 INSERT INTO `rooms` (`room_id`, `room_number`, `category_id`, `status`) VALUES
 (1, '22', 23, 'Available'),
-(2, '1', 1, 'Available'),
-(3, '2', 2, 'Available'),
+(2, '1', 1, 'Occupied'),
+(3, '2', 2, 'Occupied'),
 (4, '3', 3, 'Occupied'),
-(5, '4', 4, 'Available');
+(5, '4', 4, 'Occupied');
 
 -- --------------------------------------------------------
 
@@ -362,13 +372,13 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `bills`
 --
 ALTER TABLE `bills`
-  MODIFY `bill_id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `bill_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `bookings`
 --
 ALTER TABLE `bookings`
-  MODIFY `booking_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `booking_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
 -- AUTO_INCREMENT for table `customers`
