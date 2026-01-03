@@ -19,6 +19,16 @@
   <link rel="stylesheet" href="plugins/codemirror/theme/monokai.css">
   <!-- SimpleMDE -->
   <link rel="stylesheet" href="plugins/simplemde/simplemde.min.css">
+
+  <!-- Google Font: Source Sans Pro -->
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="plugins/fontawesome-free/css/all.min.css">
+  <!-- AdminLTE style -->
+  <link rel="stylesheet" href="dist/css/adminlte.min.css">
+  <!-- overlayScrollbars -->
+  <link rel="stylesheet" href="plugins/overlayScrollbars/css/OverlayScrollbars.min.css">
+
 </head>
 
 <body class="hold-transition sidebar-mini">
@@ -174,7 +184,7 @@
               <h1>Service Entry</h1>
             </div>
             <div class="col-sm-6">
-              
+
             </div>
           </div>
         </div><!-- /.container-fluid -->
@@ -187,18 +197,18 @@
             <div class="card card-outline card-info">
               <div class="card-header">
                 <h3 class="card-title">
-                 <?php 
-                  if(isset($_POST['submit'])){
+                  <?php
+                  if (isset($_POST['submit'])) {
                     extract($_POST);
-                    include_once ('db_config.php');
+                    include_once('db_config.php');
                     $sql = "INSERT INTO services VALUES(NULL, '$name', '$price', '$details')";
                     $conn->query($sql);
-                    if($conn->affected_rows){
+                    if ($conn->affected_rows) {
                       echo '<div class="alert alert-success">Successuflly Submitted</div>';
                     }
                   }
-                 
-                 ?>
+
+                  ?>
 
 
                 </h3>
@@ -210,13 +220,13 @@
                     <label for="input-id" class="col-sm-2">Service Name</label>
                     <input type="text" name="name" class="form-control" placeholder="Enter name">
                   </div>
-                   <div class="formgroup">
+                  <div class="formgroup">
                     <label for="input-id" class="col-sm-2">Price</label>
                     <input type="text" name="price" class="form-control" placeholder="Enter name">
                   </div>
 
                   <span class="label">Details</span>
-                  
+
                   <textarea id="summernote" name="details" rows="30">
                   </textarea>
                   <input type="submit" name="submit" value="SUBMIT">
@@ -229,7 +239,7 @@
           </div>
           <!-- /.col-->
         </div>
-        
+
       </section>
       <!-- /.content -->
     </div>
@@ -269,12 +279,21 @@
     $(function() {
       // Summernote
       $('#summernote').summernote({
-        height:200
+        height: 200
       })
 
-     
+
     })
   </script>
+
+  <!-- jQuery -->
+  <script src="plugins/jquery/jquery.min.js"></script>
+  <!-- Bootstrap 4 -->
+  <script src="plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+  <!-- overlayScrollbars -->
+  <script src="plugins/overlayScrollbars/js/jquery.overlayScrollbars.min.js"></script>
+  <!-- AdminLTE App -->
+  <script src="dist/js/adminlte.js"></script>
 </body>
 
 </html>

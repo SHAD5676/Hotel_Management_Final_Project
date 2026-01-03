@@ -14,7 +14,7 @@ $data = mysqli_fetch_assoc($user);
 
 if (isset($_POST['update'])) {
 
-  $username = $_POST['username'];
+  $username = $_POST['full_name'];
   $role = $_POST['role'];
 
   if (!empty($_POST['password'])) {
@@ -61,7 +61,7 @@ if (isset($_POST['update'])) {
 <form method="post">
   <div class="form-group">
     <label>Username (Email)</label>
-    <input type="email" name="username" value="<?= htmlspecialchars($data['username']) ?>" class="form-control" required>
+    <input type="email" name="username" value="<?= htmlspecialchars($data['full_name']) ?>" class="form-control" required>
   </div>
 
   <div class="form-group">

@@ -6,7 +6,7 @@ if (session_status() === PHP_SESSION_NONE) {
 }
 
 /* ---------- AUTH CHECK ---------- */
-if (!isset($_SESSION['user_id']) && !isset($_SESSION['username'])) {
+if (!isset($_SESSION['user_id']) && !isset($_SESSION['full_name'])) {
   header("Location: login.php");
   exit;
 }

@@ -5,7 +5,7 @@ session_start();
 
 
 // Fetch all bookings for the current user/customer
-$user_id = $_SESSION['username']; // adjust if you store customer_id
+$user_id = $_SESSION['full_name']; // adjust if you store customer_id
 $sql = "SELECT 
             b.booking_id,
             b.customer_id,

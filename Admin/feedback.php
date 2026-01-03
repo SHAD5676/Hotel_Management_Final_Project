@@ -41,11 +41,17 @@ if (isset($_POST['submit'])) {
 
 <head>
   <meta charset="utf-8">
-  <title>Feedback | Admin</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Admin | Dashboard</title>
 
+  <!-- Google Font: Source Sans Pro -->
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
+  <!-- Font Awesome -->
   <link rel="stylesheet" href="plugins/fontawesome-free/css/all.min.css">
+  <!-- AdminLTE style -->
   <link rel="stylesheet" href="dist/css/adminlte.min.css">
+  <!-- overlayScrollbars -->
+  <link rel="stylesheet" href="plugins/overlayScrollbars/css/OverlayScrollbars.min.css">
 </head>
 
 <body class="hold-transition sidebar-mini layout-fixed">
@@ -169,9 +175,14 @@ if (isset($_POST['submit'])) {
 
     <?php include("includes/footer.php"); ?>
 
+    <!-- jQuery -->
     <script src="plugins/jquery/jquery.min.js"></script>
+    <!-- Bootstrap 4 -->
     <script src="plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
-    <script src="dist/js/adminlte.min.js"></script>
+    <!-- overlayScrollbars -->
+    <script src="plugins/overlayScrollbars/js/jquery.overlayScrollbars.min.js"></script>
+    <!-- AdminLTE App -->
+    <script src="dist/js/adminlte.js"></script>
 </body>
 
 </html>

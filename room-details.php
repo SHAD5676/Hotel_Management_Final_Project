@@ -6,7 +6,7 @@ if (session_status() === PHP_SESSION_NONE) {
 }
 
 /* ---------- AUTH CHECK (ADMIN OR USER) ---------- */
-if (!isset($_SESSION['user_id']) && !isset($_SESSION['username'])) {
+if (!isset($_SESSION['user_id']) && !isset($_SESSION['full_name'])) {
   header('Location: login.php?error=Please login to access room details');
   exit;
 }

@@ -1,5 +1,8 @@
 <?php
-session_start();
+
+if (session_status() === PHP_SESSION_NONE) {
+  session_start();
+}
 
 // If you want, you can show the username here
 $loggedIn = isset($_SESSION['full_name']);

@@ -5,7 +5,7 @@ session_start();
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
-  $username = trim($_POST['username'] ?? '');
+  $username = trim($_POST['full_name'] ?? '');
   $password = $_POST['password'] ?? '';
 
   // Basic validation
