@@ -4,7 +4,7 @@ include_once('db_config.php');
 session_start();
 
 // Check if user is logged in
-if (!isset($_SESSION['username'])) {
+if (!isset($_SESSION['full_name'])) {
   header('Location: index.php');
   exit;
 }

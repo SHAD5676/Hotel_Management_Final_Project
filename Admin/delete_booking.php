@@ -3,7 +3,7 @@ include_once('db_config.php');
 session_start();
 
 // Auth check
-if (!isset($_SESSION['username'])) {
+if (!isset($_SESSION['full_name'])) {
     header('Location: index.php');
     exit;
 }

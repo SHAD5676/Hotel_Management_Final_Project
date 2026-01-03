@@ -3,7 +3,7 @@ include_once('db_config.php');
 session_start();
 
 // Redirect if not logged in
-if (!isset($_SESSION['username'])) {
+if (!isset($_SESSION['full_name'])) {
   header('location:index.php');
   exit;
 }

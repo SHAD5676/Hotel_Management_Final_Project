@@ -3,30 +3,11 @@ include_once('db_config.php');
 session_start();
 
 // Redirect if already logged in
-if (isset($_SESSION['username'])) {
+if (isset($_SESSION['full_name'])) {
   header('Location: dashboard.php');
   exit;
 }
 
-// Handle login submission
-if (isset($_POST['submit'])) {
-  $email = $_POST['username'] ?? '';
-  $password = md5($_POST['password'] ?? '');
-
-  $sql = "SELECT * FROM users WHERE username = ? AND password = ?";
-  $stmt = $conn->prepare($sql);
-  $stmt->bind_param('ss', $email, $password);
-  $stmt->execute();
-  $result = $stmt->get_result();
-
-  if ($result->num_rows > 0) {
-    $_SESSION['username'] = $email;
-    header("Location: dashboard.php");
-    exit;
-  } else {
-    $error = "Invalid email or password.";
-  }
-}
 ?>
 
 <!DOCTYPE html>

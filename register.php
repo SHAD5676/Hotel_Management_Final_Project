@@ -1,5 +1,10 @@
+<?php
+// register.php
+session_start();
+?>
+
 <!doctype html>
-<html class="no-js" lang="zxx">
+<html lang="en">
 
 <head>
   <meta charset="utf-8">
@@ -27,28 +32,24 @@
   <link rel="stylesheet" href="css/style.css">
   <link rel="stylesheet" href="css/responsive.css">
 
-  <!-- Custom CSS -->
   <style>
-    /* Full background */
+    /* Background */
     .login-bg {
       min-height: 100vh;
-      background:
-        linear-gradient(rgba(0, 0, 0, 0.45), rgba(0, 0, 0, 0.45)),
+      background: linear-gradient(rgba(0, 0, 0, 0.45), rgba(0, 0, 0, 0.45)),
         url("images/Login_Back.jpg") center / cover no-repeat;
       display: flex;
       align-items: center;
     }
 
-    /* Login card */
+    /* Card */
     .contact-bg02 {
       background-color: rgba(255, 255, 255, 0.97);
-      /* white with slight opacity */
       border-radius: 12px;
       box-shadow: 0 20px 45px rgba(0, 0, 0, 0.3);
       border: 1px solid rgba(255, 255, 255, 0.6);
     }
 
-    /* Inputs */
     .contact-bg02 .form-control {
       height: 48px;
       font-size: 15px;
@@ -59,7 +60,6 @@
       border-right: 0;
     }
 
-    /* Button */
     .ss-btn {
       background: #0d6efd;
       color: #fff;
@@ -69,33 +69,26 @@
 
     .ss-btn:hover {
       background: #0b5ed7;
-      color: #fff;
     }
   </style>
-
-
 </head>
 
 <body>
 
   <!-- header -->
   <?php include("inc/top_nav.php"); ?>
-  <!-- header-end -->
 
-
-  <!-- login area -->
-  <!-- Login Area -->
+  <!-- Registration area -->
   <section class="contact-area login-bg">
     <div class="container">
-      <div class="row justify-content-center w-100">
-        <div class="col-lg-5 col-md-7">
+      <div class="row justify-content-center">
+        <div class="col-lg-6 col-md-8">
 
           <div class="contact-bg02 p-5">
 
-            <!-- Title -->
             <div class="section-title text-center mb-4">
-              <h2 class="fw-bold mb-1">User Login</h2>
-              <p class="text-muted mb-0">Sign in to access your account</p>
+              <h2 class="fw-bold mb-1">Create an Account</h2>
+              <p class="text-muted mb-0">Register to book hotels and manage your reservations</p>
             </div>
 
             <!-- Error message -->
@@ -105,53 +98,62 @@
               </div>
             <?php endif; ?>
 
-            <!-- Login Form -->
-            <form action="login_action.php" method="POST" autocomplete="off">
+            <!-- Registration Form -->
+            <form action="register_action.php" method="POST" autocomplete="off">
 
-              <!-- Username -->
+              <!-- Full Name -->
               <div class="mb-3">
-                <label class="form-label fw-semibold">Username</label>
+                <label class="form-label fw-semibold">Full Name</label>
                 <div class="input-group">
-                  <span class="input-group-text">
-                    <i class="bi bi-person"></i>
-                  </span>
-                  <input
-                    type="text"
-                    name="username"
-                    class="form-control"
-                    placeholder="Enter your username"
-                    required>
+                  <span class="input-group-text"><i class="bi bi-person"></i></span>
+                  <input type="text" name="full_name" class="form-control" placeholder="Enter your full name" required>
+                </div>
+              </div>
+
+              <!-- Email -->
+              <div class="mb-3">
+                <label class="form-label fw-semibold">Email Address</label>
+                <div class="input-group">
+                  <span class="input-group-text"><i class="bi bi-envelope"></i></span>
+                  <input type="email" name="email" class="form-control" placeholder="Enter your email" required>
+                </div>
+              </div>
+
+              <!-- Phone -->
+              <div class="mb-3">
+                <label class="form-label fw-semibold">Phone Number</label>
+                <div class="input-group">
+                  <span class="input-group-text"><i class="bi bi-telephone"></i></span>
+                  <input type="tel" name="phone" class="form-control" placeholder="Enter your phone number" required>
                 </div>
               </div>
 
               <!-- Password -->
-              <div class="mb-4">
+              <div class="mb-3">
                 <label class="form-label fw-semibold">Password</label>
                 <div class="input-group">
-                  <span class="input-group-text">
-                    <i class="bi bi-lock"></i>
-                  </span>
-                  <input
-                    type="password"
-                    name="password"
-                    class="form-control"
-                    placeholder="Enter your password"
-                    required>
+                  <span class="input-group-text"><i class="bi bi-lock"></i></span>
+                  <input type="password" name="password" class="form-control" placeholder="Create a password" required>
                 </div>
               </div>
 
-              <!-- Submit -->
-              <button type="submit" class="btn ss-btn w-100 py-2">
-                <i class="bi bi-box-arrow-in-right me-1"></i>
-                Login
-              </button>
+              <!-- Confirm Password -->
+              <div class="mb-4">
+                <label class="form-label fw-semibold">Confirm Password</label>
+                <div class="input-group">
+                  <span class="input-group-text"><i class="bi bi-lock-fill"></i></span>
+                  <input type="password" name="confirm_password" class="form-control" placeholder="Re-enter password" required>
+                </div>
+              </div>
 
+              <button type="submit" class="btn ss-btn w-100 py-2">
+                <i class="bi bi-person-plus me-1"></i> Register
+              </button>
             </form>
+
             <p class="mt-3 text-center text-muted">
-              Don’t have an account?
-              <a href="register.php" class="fw-semibold text-primary text-decoration-none">
-                Create one
-              </a>
+              Already have an account?
+              <a href="login.php" class="fw-semibold text-primary text-decoration-none">Login here</a>
             </p>
 
           </div>
@@ -161,9 +163,6 @@
     </div>
   </section>
 
-
-
-  <!-- footer -->
   <?php include("inc/footer.php"); ?>
 
   <!-- JS here -->
@@ -186,7 +185,6 @@
   <script src="js/jquery.magnific-popup.min.js"></script>
   <script src="js/element-in-view.js"></script>
   <script src="js/main.js"></script>
-
 </body>
 
 </html>
