@@ -8,7 +8,7 @@ if(!isset($_SESSION['username'])){
 
 // Stripe
 require __DIR__ . '/../vendor/autoload.php';
-\Stripe\Stripe::setApiKey('sk_test_51Sio7AFCqyrBH5H9dGD3PzfNzRyv9r5VdJ45e2mT2pLdGqdxgf58dijavpOBiGAiB5lwOSzy3Fs1c0gGLyJnMuMO0012wQWbdn'); // 👉 তোমার SECRET KEY
+\Stripe\Stripe::setApiKey('sk_test_51Sio7AFCqyrBH5H9dGD3PzfNzRyv9r5VdJ45e2mT2pLdGqdxgf58dijavpOBiGAiB5lwOSzy3Fs1c0gGLyJnMuMO0012wQWbdn'); //
 
 if(!isset($_GET['id'])){
     die("Invalid Bill ID");
@@ -26,7 +26,7 @@ if(!$bill){
 }
 
 // Base URL (Admin folder)
-$base_url = "http://localhost/PHP/pwad68_PHP/Hotel_Management_Final_Project/Hotel_Management_Final_Project/Admin/";
+$base_url = "http://localhost/pwad_68/Hotel_Management_System_Project_Final/admin/";
 
 $amount = $bill['total_amount'] * 100; // Paisa/cents
 

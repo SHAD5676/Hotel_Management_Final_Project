@@ -8,23 +8,22 @@ $token = $_POST['stripeToken'];
 $amount = $_POST['amount'];
 $bill_id = $_POST['bill_id'];
 
-\Stripe\Charge::create([
-  "amount" => $amount * 100,
-  "currency" => "bdt",
-  "source" => $token,
-  "description" => "Hotel Bill Payment"
+$session = \Stripe\Checkout\Session::create([
+  'payment_method_types' => ['card'],
+  'mode' => 'payment',
+  'line_items' => [[
+    'price_data' => [
+      'currency' => 'bdt',
+      'product_data' => [
+        'name' => 'Hotel Bill Payment',
+      ],
+      'unit_amount' => $amount * 100,
+    ],
+    'quantity' => 1,
+  ]],
+  'success_url' => 'http://localhost/pwad_68/Hotel_Management_System_Project_Final/admin/payment_success.php?bill_id=' . $bill_id,
+  'cancel_url'  => 'http://localhost/pwad_68/Hotel_Management_System_Project_Final/admin/bills.php',
 ]);
 
-// Save payment
-mysqli_query($conn, "
-  INSERT INTO payments (bill_id, amount, method, status)
-  VALUES ('$bill_id','$amount','Stripe','Paid')
-");
-
-// Update bill
-mysqli_query($conn, "
-  UPDATE bills SET payment_method='Stripe'
-  WHERE bill_id='$bill_id'
-");
-
-header("Location: invoice.php?id=$bill_id");
+header("Location: " . $session->url);
+exit;

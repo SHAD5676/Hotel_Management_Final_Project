@@ -1,3 +1,4 @@
+<!-- payment_success.php?bill_id=2 -->
 <?php
 include_once('db_config.php');
 
