@@ -1,7 +1,6 @@
 <?php
 include_once('db_config.php');
 
-session_start();
 ?>
 
 <!doctype html>
@@ -40,29 +39,37 @@ session_start();
   <!-- main-area -->
   <main>
     <!-- breadcrumb-area -->
-    <section class="breadcrumb-area d-flex align-items-center" style="background-image:url(images/63.jpg)">
+    <section class="breadcrumb-area d-flex align-items-center"
+      style="
+    background-image:
+      linear-gradient(rgba(0,0,0,0.45), rgba(0,0,0,0.45)),
+      url(images/63.jpg);
+  ">
       <div class="container">
         <div class="row align-items-center">
           <div class="col-xl-12 col-lg-12">
             <div class="breadcrumb-wrap text-center">
               <div class="breadcrumb-title">
-                <h2>Our Menu</h2>
+                <h2>Our Room's</h2>
                 <div class="breadcrumb-wrap">
-
                   <nav aria-label="breadcrumb">
                     <ol class="breadcrumb">
-                      <li class="breadcrumb-item"><a href="index.php">Home</a></li>
-                      <li class="breadcrumb-item active" aria-current="page">Our Room</li>
+                      <li class="breadcrumb-item">
+                        <a href="index.php">Home</a>
+                      </li>
+                      <li class="breadcrumb-item active" aria-current="page">
+                        Our Room
+                      </li>
                     </ol>
                   </nav>
                 </div>
               </div>
             </div>
           </div>
-
         </div>
       </div>
     </section>
+
 
     <?php if (isset($_SESSION['success'])): ?>
       <div class="container mt-4">
