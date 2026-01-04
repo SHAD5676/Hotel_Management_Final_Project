@@ -8,18 +8,24 @@ if (!isset($_SESSION['full_name'])) {
 }
 
 // Fetch users
-$users = mysqli_query($conn, "SELECT * FROM users ORDER BY user_id DESC");
+$users = mysqli_query($conn, "SELECT `id`, `full_name`, `email`, `phone`, `role`, `created_at`, `updated_at` FROM `users` ORDER BY `id` DESC");
 ?>
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
   <meta charset="utf-8">
-  <title>Admin | Users</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Admin | Dashboard</title>
 
+  <!-- Google Font: Source Sans Pro -->
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
+  <!-- Font Awesome -->
   <link rel="stylesheet" href="plugins/fontawesome-free/css/all.min.css">
+  <!-- AdminLTE style -->
   <link rel="stylesheet" href="dist/css/adminlte.min.css">
+  <!-- overlayScrollbars -->
+  <link rel="stylesheet" href="plugins/overlayScrollbars/css/OverlayScrollbars.min.css">
 </head>
 
 <body class="hold-transition sidebar-mini layout-fixed">
@@ -51,10 +57,12 @@ $users = mysqli_query($conn, "SELECT * FROM users ORDER BY user_id DESC");
             <div class="card-body">
 
               <table class="table table-bordered table-hover">
-                <thead class="bg-dark">
+                <thead class="bg-dark text-white">
                   <tr>
-                    <th>ID</th>
-                    <th>Username</th>
+                    <th>#</th>
+                    <th>Full Name</th>
+                    <th>Email</th>
+                    <th>Phone</th>
                     <th>Role</th>
                     <th>Action</th>
                   </tr>
@@ -66,13 +74,15 @@ $users = mysqli_query($conn, "SELECT * FROM users ORDER BY user_id DESC");
                       <tr>
                         <td><?= $i++ ?></td>
                         <td><?= htmlspecialchars($row['full_name']) ?></td>
-                        <td><?= htmlspecialchars($row['role'] ?? 'Admin') ?></td>
+                        <td><?= htmlspecialchars($row['email']) ?></td>
+                        <td><?= htmlspecialchars($row['phone']) ?></td>
+                        <td><?= htmlspecialchars($row['role'] ?? 'user') ?></td>
                         <td>
                           <a href="user_edit.php?id=<?= $row['id'] ?>" class="btn btn-sm btn-info">
                             <i class="fas fa-edit"></i>
                           </a>
                           <a href="user_delete.php?id=<?= $row['id'] ?>" class="btn btn-sm btn-danger"
-                            onclick="return confirm('Delete this user?')">
+                            onclick="return confirm('Are you sure you want to delete this user?')">
                             <i class="fas fa-trash"></i>
                           </a>
                         </td>
@@ -80,7 +90,7 @@ $users = mysqli_query($conn, "SELECT * FROM users ORDER BY user_id DESC");
                     <?php endwhile; ?>
                   <?php else: ?>
                     <tr>
-                      <td colspan="4" class="text-center">No users found</td>
+                      <td colspan="6" class="text-center">No users found</td>
                     </tr>
                   <?php endif; ?>
                 </tbody>
@@ -96,8 +106,14 @@ $users = mysqli_query($conn, "SELECT * FROM users ORDER BY user_id DESC");
     <?php include("includes/footer.php"); ?>
   </div>
 
+
+  <!-- jQuery -->
   <script src="plugins/jquery/jquery.min.js"></script>
+  <!-- Bootstrap 4 -->
   <script src="plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+  <!-- overlayScrollbars -->
+  <script src="plugins/overlayScrollbars/js/jquery.overlayScrollbars.min.js"></script>
+  <!-- AdminLTE App -->
   <script src="dist/js/adminlte.js"></script>
 </body>
 
