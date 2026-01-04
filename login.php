@@ -108,9 +108,9 @@
             <!-- Login Form -->
             <form action="login_action.php" method="POST" autocomplete="off">
 
-              <!-- Username -->
+              <!-- Username / Email -->
               <div class="mb-3">
-                <label class="form-label fw-semibold">Username</label>
+                <label class="form-label fw-semibold">Email or Full Name</label>
                 <div class="input-group">
                   <span class="input-group-text">
                     <i class="bi bi-person"></i>
@@ -119,7 +119,7 @@
                     type="text"
                     name="username"
                     class="form-control"
-                    placeholder="Enter your username"
+                    placeholder="Enter email or full name"
                     required>
                 </div>
               </div>
@@ -147,6 +147,7 @@
               </button>
 
             </form>
+
             <p class="mt-3 text-center text-muted">
               Don’t have an account?
               <a href="register.php" class="fw-semibold text-primary text-decoration-none">
