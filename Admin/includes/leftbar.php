@@ -100,6 +100,12 @@ $userName = $loggedIn ? $_SESSION['full_name'] : 'Guest';
             </a>
           </li>
           <li class="nav-item">
+            <a href="all_payments.php" class="nav-link">
+              <i class="nav-icon fas fa-calendar-alt"></i>
+              <p>Payments</p>
+            </a>
+          </li>
+          <li class="nav-item">
             <a href="service_new.php" class="nav-link">
               <i class="nav-icon fas fa-chart-pie"></i>
               <p>Services</p>
